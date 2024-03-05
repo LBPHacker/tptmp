@@ -30,7 +30,7 @@ return {
 	uid_backend_timeout = 15,
 
 	-- * Host to connect to by default.
-	host = "tptmp.starcatcher.us",
+	host = "tptmp.trigraph.net",
 
 	-- * Port to connect to by default.
 	port = 34403,
