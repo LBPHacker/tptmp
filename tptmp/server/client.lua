@@ -588,6 +588,7 @@ function client_i:close_socket_()
 end
 
 function client_i:manage_websocket_rx_()
+	self.websocket_rx_ = true
 	while self.status_ == "running" do
 		local data, opcode, errno = self.websocket_:receive()
 		if self.status_ ~= "running" then
@@ -616,11 +617,12 @@ function client_i:manage_websocket_rx_()
 		end
 		self.read_wake_:signal()
 	end
-	self.websocket_rx_done_ = true
+	self.websocket_rx_ = nil
 	self.wake_:signal()
 end
 
 function client_i:manage_websocket_tx_()
+	self.websocket_tx_ = true
 	while self.status_ == "running" do
 		if not self.tx_:next() then
 			util.cqueues_poll(self.write_wake_, self.wake_)
@@ -645,7 +647,7 @@ function client_i:manage_websocket_tx_()
 			self.tx_:pop(#data)
 		end
 	end
-	self.websocket_tx_done_ = true
+	self.websocket_tx_ = nil
 	self.wake_:signal()
 end
 
@@ -770,7 +772,7 @@ function client_i:handle_http_stream(stream)
 			return
 		end
 		self.wake_:signal()
-		while self.status_ == "running" or not self.websocket_rx_done_ or not self.websocket_tx_done_ do
+		while self.status_ == "running" or self.websocket_rx_ or self.websocket_tx_ do
 			util.cqueues_poll(self.wake_)
 		end
 		if self.websocket_.readyState < 3 then
