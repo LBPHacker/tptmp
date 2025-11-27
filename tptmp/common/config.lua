@@ -18,19 +18,19 @@ return {
 	message_interval = 1,
 
 	-- * Authentication backend URL.
-	auth_backend = "https://powdertoy.co.uk/ExternalAuth.api",
+	auth_backend = "https://example.com/ExternalAuth.api",
 
 	-- * Authentication backend timeout in seconds.
 	auth_backend_timeout = 15,
 
 	-- * Username to UID backend URL.
-	uid_backend = "https://powdertoy.co.uk/User.json",
+	uid_backend = "https://example.com/User.json",
 
 	-- * Username to UID backend timeout in seconds.
 	uid_backend_timeout = 15,
 
 	-- * Host to connect to by default.
-	host = "tptmp.starcatcher.us",
+	host = "tptmp.trigraph.net",
 
 	-- * Port to connect to by default.
 	port = 34403,
