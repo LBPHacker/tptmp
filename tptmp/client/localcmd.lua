@@ -179,6 +179,20 @@ local cmdp = command_parser.new({
 			end,
 			help = "/connectroom <room> [host[:[+]port]]: same as /connect, but skips the lobby and joins the specified room",
 		},
+		setname = {
+			func = function(localcmd, message, words, offsets)
+				local name = words[2]
+				if not name or name:find("[^A-Za-z0-9-_]") or #name < 1 or #name > 32 then
+					return false
+				end
+				tpt.get_name = function()
+					return name
+				end
+				localcmd.window_:backlog_push_neutral("* Name set to " .. name)
+				return true
+			end,
+			help = "/setname <name>: set user name to connect with; use only alphanumeric characters, hyphens, or underscores; must be between 1 and 32 characters",
+		},
 		CR = {
 			alias = "connectroom",
 		},
